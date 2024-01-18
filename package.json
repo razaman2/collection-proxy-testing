@@ -27,7 +27,8 @@
         "vitest": "^1.2.1"
     },
     "dependencies": {
-        "@firebase/rules-unit-testing": "^3.0.1"
+        "@firebase/rules-unit-testing": "^3.0.1",
+        "firebase": "^10.7.1"
     },
     "publishConfig": {
         "access": "public"

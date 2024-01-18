@@ -1,4 +1,6 @@
 import {initializeTestEnvironment, assertSucceeds, assertFails, withFunctionTriggersDisabled, RulesTestEnvironment} from "@firebase/rules-unit-testing";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 
 export {assertSucceeds, assertFails, withFunctionTriggersDisabled};
 
@@ -14,30 +16,22 @@ type InitializeConfig = {
     port : number;
 };
 
-type Firestore = ReturnType<typeof getFirestore>;
+type Firestore = ReturnType<typeof firebase.firestore>;
 
 export let app : {
     config : RulesTestEnvironment;
 };
 
-const message = "App not initialized!";
-
-const getFirestore = (options : Partial<TestConfig> = {}) => {
-    if (app.config) {
-        return options.auth
-            ? app.config.authenticatedContext(options.auth.id.toString()).firestore()
-            : app.config.unauthenticatedContext().firestore();
-    } else {
-        throw new Error(message);
-    }
-};
-
 export const getDefaultContext = (callback : (firestore : Firestore) => PromiseLike<any>, options : Partial<TestConfig> = {}) => {
     return new Promise((resolve, reject) => {
         if (app.config) {
-            resolve(callback(getFirestore(options)));
+            const getFirestore = options.auth
+                ? app.config.authenticatedContext(options.auth.id.toString()).firestore()
+                : app.config.unauthenticatedContext().firestore();
+
+            resolve(callback(getFirestore));
         } else {
-            reject(message);
+            reject("App not initialized!");
         }
     });
 };
@@ -49,7 +43,7 @@ export const getAdminContext = (callback : (firestore : Firestore) => PromiseLik
                 return await callback(context.firestore());
             }));
         } else {
-            reject(message);
+            reject("App not initialized!");
         }
     });
 };
