@@ -5,24 +5,24 @@ import "firebase/compat/firestore";
 export {assertSucceeds, assertFails, withFunctionTriggersDisabled};
 
 type TestConfig = {
-    auth : {
-        id : string | number;
+    auth: {
+        id: string | number;
     };
 };
 
 type InitializeConfig = {
-    projectId : string,
-    host : string,
-    port : number;
+    projectId: string,
+    host: string,
+    port: number;
 };
 
 type Firestore = ReturnType<typeof firebase.firestore>;
 
-export let app : {
-    config : RulesTestEnvironment;
+export let app: {
+    config: RulesTestEnvironment;
 };
 
-export const getDefaultContext = (callback : (firestore : Firestore) => PromiseLike<any>, options : Partial<TestConfig> = {}) => {
+export const getDefaultContext = (callback: (firestore: Firestore) => PromiseLike<any>, options: Partial<TestConfig> = {}) => {
     return new Promise((resolve, reject) => {
         if (app.config) {
             const getFirestore = options.auth
@@ -36,7 +36,7 @@ export const getDefaultContext = (callback : (firestore : Firestore) => PromiseL
     });
 };
 
-export const getAdminContext = (callback : (firestore : Firestore) => PromiseLike<any>) => {
+export const getAdminContext = (callback: (firestore: Firestore) => PromiseLike<any>) => {
     return new Promise((resolve, reject) => {
         if (app.config) {
             resolve(app.config.withSecurityRulesDisabled(async (context) => {
@@ -48,7 +48,17 @@ export const getAdminContext = (callback : (firestore : Firestore) => PromiseLik
     });
 };
 
-export const initializeTestApp = async (options : Partial<InitializeConfig> = {}) => {
+export const repeat = (count: number, callback: (sequence?: number) => any) => {
+    return [count + 1].reduce((promises: Array<any>, sequence) => {
+        while (--sequence) {
+            promises.push(callback(sequence));
+        }
+
+        return promises;
+    }, []);
+};
+
+export const initializeTestApp = async (options: Partial<InitializeConfig> = {}) => {
     const {projectId = "demo-app", host = "127.0.0.1", port = 8080} = options;
 
     app = {

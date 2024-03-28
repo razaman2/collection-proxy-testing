@@ -1,7 +1,7 @@
 {
     "name": "@razaman2/collection-proxy-testing",
     "version": "0.0.1",
-    "description": "a convenient setup for testing native firestore or @razaman2/collection-proxy.",
+    "description": "A convenient list of helper functions for testing native firestore, firestore-rules or @razaman2/collection-proxy.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "types": "dist/index.d.ts",
@@ -22,13 +22,13 @@
     "author": "razaman2",
     "license": "MIT",
     "devDependencies": {
-        "tsup": "^8.0.1",
-        "typescript": "^5.3.3",
-        "vitest": "^1.2.1"
+        "tsup": "^8.0.2",
+        "typescript": "^5.4.3",
+        "vitest": "^1.4.0"
     },
     "dependencies": {
         "@firebase/rules-unit-testing": "^3.0.1",
-        "firebase": "^10.7.1"
+        "firebase": "^10.9.0"
     },
     "publishConfig": {
         "access": "public"
