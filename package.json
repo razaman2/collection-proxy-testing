@@ -1,6 +1,6 @@
 {
     "name": "@razaman2/collection-proxy-testing",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A convenient list of helper functions for testing native firestore, firestore-rules or @razaman2/collection-proxy.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
